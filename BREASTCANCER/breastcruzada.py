@@ -2,7 +2,7 @@
 import pandas as pd
 import keras
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 from keras.wrappers.scikit_learn import KerasClassifier 
 from sklearn.model_selection import cross_val_score
 
@@ -15,7 +15,9 @@ classe = pd.read_csv('saidas-breast.csv')
 def criarRede():
     classificador = Sequential()
     classificador.add(Dense(units = 16, activation = 'relu',kernel_initializer = 'random_uniform',input_dim = 30))
+    classificador.add(Dropout(0.2))
     classificador.add(Dense(units = 16, activation = 'relu',kernel_initializer = 'random_uniform'))
+    classificador.add(Dropout(0.2))
     classificador.add(Dense(units=1,activation = 'sigmoid'))
     
     otimizador = keras.optimizers.Adam(lr = 0.001, decay = 0.0001, clipvalue = 0.5)
@@ -26,6 +28,8 @@ def criarRede():
 
 classificador = KerasClassifier(build_fn=criarRede,epochs = 100, batch_size =10)
 
+
+
 resultados = cross_val_score(classificador, 
                              X = previsores,
                              y= classe, 
@@ -33,7 +37,3 @@ resultados = cross_val_score(classificador,
 
 media = resultados.mean()
 desvio = resultados.std()
-
-from sklearn.metrics import confusion_matrix, accuracy_score
-
-matriz = confusion_matrix(classe,previsoes)
