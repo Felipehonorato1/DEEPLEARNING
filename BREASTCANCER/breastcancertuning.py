@@ -35,3 +35,9 @@ grid_search = grid_search.fit(previsores,classe)
 
 melhores_parametros = grid_search.best_params_
 melhore_precisao = grid_search.best_score_
+
+classificador_json = classificador.to_json()
+with open ('irisneuralnetwork.json','w')as json_file:
+    json_file.write(classificador_json)
+
+classificador.save_weights('irisweights.h5')

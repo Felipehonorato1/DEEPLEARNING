@@ -39,3 +39,5 @@ grid_search = grid_search.fit(previsores,classe)
 
 melhores_params = grid_search.best_params_
 melhores_resultados = grid_search.best_score_ 
+
+
