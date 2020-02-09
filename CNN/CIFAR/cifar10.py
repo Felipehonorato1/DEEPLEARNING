@@ -32,7 +32,7 @@ classificador.add(Dropout(0.1))
 classificador.add(Dense(units = 10, activation = 'softmax'))
 classificador.compile(optimizer = 'adam', loss = 'categorical_crossentropy',metrics = ['accuracy'])
 
-classificador.fit(previsores_treinamento,classe_treinamento, batch_size= 128, epochs = 5,
+classificador.fit(previsores_treinamento,classe_treinamento, batch_size= 100, epochs = 10,
                   validation_data = (previsores_teste,classe_teste))
 
 resultados = classificador.evaluate(previsores_teste,classe_teste)
