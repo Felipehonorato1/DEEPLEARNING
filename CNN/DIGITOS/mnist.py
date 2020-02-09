@@ -5,6 +5,8 @@ from keras.layers import Dense, Flatten, Dropout
 from keras.utils import np_utils
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers.normalization import BatchNormalization 
+import numpy as np
+from keras.preprocessing import image
 
 (X_treinamento,y_treinamento),(X_teste, y_teste) = mnist.load_data()
 
@@ -38,5 +40,12 @@ classificador.compile(optimizer = 'adam' , loss = 'categorical_crossentropy',met
 classificador.fit(previsores_treinamento,classe_treinamento, batch_size= 128, epochs = 5,
                   validation_data = (previsores_teste,classe_teste))
 
+imagem_teste = X_teste.reshape(1,28,28,1)
+imagem_teste = imagem_teste.astype('float32')
 
+imagem_teste /= 255
+
+preview = classificador.predit(imagem_teste)
+
+result = np.argmax(preview)
 
